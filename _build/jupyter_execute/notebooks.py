@@ -43,13 +43,19 @@
 # In[1]:
 
 
+get_ipython().run_line_magic('config', "InlineBackend.figure_format = 'retina'")
+
+
+# In[2]:
+
+
 from matplotlib import rcParams, cycler
 import matplotlib.pyplot as plt
 import numpy as np
 plt.ion()
 
 
-# In[2]:
+# In[3]:
 
 
 # Fixing random state for reproducibility
