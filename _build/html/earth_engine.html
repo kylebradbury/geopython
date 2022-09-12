@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earth Engine for gathering data &#8212; Python for geospatial imagery</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Basic plotting of geospatial data" href="plotting.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/geopython_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Python for geospatial imagery</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Introduction to Python for Geospatial Imagery Data and Machine Learning
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="setup.html">
+   Setting up your environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="plotting.html">
+   Basic plotting of geospatial data
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Earth Engine for gathering data
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/earth_engine.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/kylebradbury/geopython"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/kylebradbury/geopython/main?urlpath=tree/_build/html/earth_engine.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selecting-imagery">
+   Selecting imagery
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="earth-engine-for-gathering-data">
+<h1>Earth Engine for gathering data<a class="headerlink" href="#earth-engine-for-gathering-data" title="Permalink to this headline">¶</a></h1>
+<p>Google Earth Engine is a powerful tool for geospatial data analysis. Here, we will discuss how to use its Python API for gathering data from Landsat, Sentinel, and NAIP imagery.</p>
+<p>To start off with, request access to Google Earth Engine at: <a class="reference external" href="https://earthengine.google.com/"></a>. This may take some time. Once approved, install the Python API and get credentials for using the API following <a class="reference external" href="https://developers.google.com/earth-engine/guides/python_install-conda#mac_6">these instructions</a>. Be sure to try out the test code they suggest to make sure Earth Engine is running successfully):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ee</span>
+
+<span class="c1"># Initialize the Earth Engine module.</span>
+<span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
+
+<span class="c1"># Print metadata for a DEM dataset.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;USGS/SRTMGL1_003&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;type&#39;: &#39;Image&#39;, &#39;bands&#39;: [{&#39;id&#39;: &#39;elevation&#39;, &#39;data_type&#39;: {&#39;type&#39;: &#39;PixelType&#39;, &#39;precision&#39;: &#39;int&#39;, &#39;min&#39;: -32768, &#39;max&#39;: 32767}, &#39;dimensions&#39;: [1296001, 417601], &#39;crs&#39;: &#39;EPSG:4326&#39;, &#39;crs_transform&#39;: [0.0002777777777777778, 0, -180.0001388888889, 0, -0.0002777777777777778, 60.00013888888889]}], &#39;id&#39;: &#39;USGS/SRTMGL1_003&#39;, &#39;version&#39;: 1641990767055141, &#39;properties&#39;: {&#39;system:visualization_0_min&#39;: &#39;0.0&#39;, &#39;type_name&#39;: &#39;Image&#39;, &#39;keywords&#39;: [&#39;dem&#39;, &#39;elevation&#39;, &#39;geophysical&#39;, &#39;nasa&#39;, &#39;srtm&#39;, &#39;topography&#39;, &#39;usgs&#39;], &#39;thumb&#39;: &#39;https://mw1.google.com/ges/dd/images/SRTM90_V4_thumb.png&#39;, &#39;description&#39;: &#39;&lt;p&gt;The Shuttle Radar Topography Mission (SRTM, see &lt;a href=&quot;https://onlinelibrary.wiley.com/doi/10.1029/2005RG000183/full&quot;&gt;Farr\net al. 2007&lt;/a&gt;)\ndigital elevation data is an international research effort that\nobtained digital elevation models on a near-global scale. This\nSRTM V3 product (SRTM Plus) is provided by NASA JPL\nat a resolution of 1 arc-second (approximately 30m).&lt;/p&gt;&lt;p&gt;This dataset has undergone a void-filling process using open-source data\n(ASTER GDEM2, GMTED2010, and NED), as opposed to other versions that\ncontain voids or have been void-filled with commercial sources.\nFor more information on the different versions see the\n&lt;a href=&quot;https://lpdaac.usgs.gov/documents/13/SRTM_Quick_Guide.pdf&quot;&gt;SRTM Quick Guide&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Documentation:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://lpdaac.usgs.gov/documents/179/SRTM_User_Guide_V3.pdf&quot;&gt;User&amp;#39;s Guide&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://lpdaac.usgs.gov/documents/13/SRTM_Quick_Guide.pdf&quot;&gt;General Documentation&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://doi.org/10.1029/2005RG000183&quot;&gt;Algorithm Theoretical Basis Document (ATBD)&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;Provider: &lt;a href=&quot;https://cmr.earthdata.nasa.gov/search/concepts/C1000000240-LPDAAC_ECS.html&quot;&gt;NASA / USGS / JPL-Caltech&lt;/a&gt;&lt;/b&gt;&lt;br&gt;&lt;p&gt;&lt;b&gt;Bands&lt;/b&gt;&lt;table class=&quot;eecat&quot;&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Name&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Description&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;elevation&lt;/td&gt;&lt;td&gt;&lt;p&gt;Elevation&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;Terms of Use&lt;/b&gt;&lt;br&gt;&lt;p&gt;Unless otherwise noted, images and video on JPL public\nweb sites (public sites ending with a jpl.nasa.gov address) may\nbe used for any purpose without prior permission. For more information\nand exceptions visit the &lt;a href=&quot;https://www.jpl.nasa.gov/imagepolicy/&quot;&gt;JPL Image Use Policy site&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Suggested citation(s)&lt;/b&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;Farr, T.G., Rosen, P.A., Caro, E., Crippen, R., Duren, R., Hensley,\nS., Kobrick, M., Paller, M., Rodriguez, E., Roth, L., Seal, D.,\nShaffer, S., Shimada, J., Umland, J., Werner, M., Oskin, M., Burbank,\nD., and Alsdorf, D.E., 2007, The shuttle radar topography mission:\nReviews of Geophysics, v. 45, no. 2, RG2004, at\n&lt;a href=&quot;https://doi.org/10.1029/2005RG000183&quot;&gt;https://doi.org/10.1029/2005RG000183&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;style&gt;\n  table.eecat {\n  border: 1px solid black;\n  border-collapse: collapse;\n  font-size: 13px;\n  }\n  table.eecat td, tr, th {\n  text-align: left; vertical-align: top;\n  border: 1px solid gray; padding: 3px;\n  }\n  td.nobreak { white-space: nowrap; }\n&lt;/style&gt;&#39;, &#39;source_tags&#39;: [&#39;nasa&#39;, &#39;usgs&#39;], &#39;visualization_0_max&#39;: &#39;6000.0&#39;, &#39;title&#39;: &#39;NASA SRTM Digital Elevation 30m&#39;, &#39;product_tags&#39;: [&#39;srtm&#39;, &#39;elevation&#39;, &#39;topography&#39;, &#39;dem&#39;, &#39;geophysical&#39;], &#39;provider&#39;: &#39;NASA / USGS / JPL-Caltech&#39;, &#39;visualization_0_min&#39;: &#39;0.0&#39;, &#39;visualization_0_name&#39;: &#39;Elevation&#39;, &#39;date_range&#39;: [950227200000, 951177600000], &#39;system:visualization_0_gamma&#39;: &#39;1.6&#39;, &#39;period&#39;: 0, &#39;system:visualization_0_bands&#39;: &#39;elevation&#39;, &#39;provider_url&#39;: &#39;https://cmr.earthdata.nasa.gov/search/concepts/C1000000240-LPDAAC_ECS.html&#39;, &#39;visualization_0_gamma&#39;: &#39;1.6&#39;, &#39;sample&#39;: &#39;https://mw1.google.com/ges/dd/images/SRTM90_V4_sample.png&#39;, &#39;tags&#39;: [&#39;dem&#39;, &#39;elevation&#39;, &#39;geophysical&#39;, &#39;nasa&#39;, &#39;srtm&#39;, &#39;topography&#39;, &#39;usgs&#39;], &#39;system:visualization_0_max&#39;: &#39;6000.0&#39;, &#39;system:visualization_0_name&#39;: &#39;Elevation&#39;, &#39;system:asset_size&#39;: 132792638252, &#39;visualization_0_bands&#39;: &#39;elevation&#39;}}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;USGS/SRTMGL1_003&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getInfo</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{
+   &quot;bands&quot;: [
+      {
+         &quot;crs&quot;: &quot;EPSG:4326&quot;,
+         &quot;crs_transform&quot;: [
+            0.0002777777777777778,
+            0,
+            -180.0001388888889,
+            0,
+            -0.0002777777777777778,
+            60.00013888888889
+         ],
+         &quot;data_type&quot;: {
+            &quot;max&quot;: 32767,
+            &quot;min&quot;: -32768,
+            &quot;precision&quot;: &quot;int&quot;,
+            &quot;type&quot;: &quot;PixelType&quot;
+         },
+         &quot;dimensions&quot;: [
+            1296001,
+            417601
+         ],
+         &quot;id&quot;: &quot;elevation&quot;
+      }
+   ],
+   &quot;id&quot;: &quot;USGS/SRTMGL1_003&quot;,
+   &quot;properties&quot;: {
+      &quot;date_range&quot;: [
+         950227200000,
+         951177600000
+      ],
+      &quot;description&quot;: &quot;&lt;p&gt;The Shuttle Radar Topography Mission (SRTM, see &lt;a href=\&quot;https://onlinelibrary.wiley.com/doi/10.1029/2005RG000183/full\&quot;&gt;Farr\net al. 2007&lt;/a&gt;)\ndigital elevation data is an international research effort that\nobtained digital elevation models on a near-global scale. This\nSRTM V3 product (SRTM Plus) is provided by NASA JPL\nat a resolution of 1 arc-second (approximately 30m).&lt;/p&gt;&lt;p&gt;This dataset has undergone a void-filling process using open-source data\n(ASTER GDEM2, GMTED2010, and NED), as opposed to other versions that\ncontain voids or have been void-filled with commercial sources.\nFor more information on the different versions see the\n&lt;a href=\&quot;https://lpdaac.usgs.gov/documents/13/SRTM_Quick_Guide.pdf\&quot;&gt;SRTM Quick Guide&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Documentation:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;&lt;a href=\&quot;https://lpdaac.usgs.gov/documents/179/SRTM_User_Guide_V3.pdf\&quot;&gt;User&amp;#39;s Guide&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;&lt;a href=\&quot;https://lpdaac.usgs.gov/documents/13/SRTM_Quick_Guide.pdf\&quot;&gt;General Documentation&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;&lt;a href=\&quot;https://doi.org/10.1029/2005RG000183\&quot;&gt;Algorithm Theoretical Basis Document (ATBD)&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;Provider: &lt;a href=\&quot;https://cmr.earthdata.nasa.gov/search/concepts/C1000000240-LPDAAC_ECS.html\&quot;&gt;NASA / USGS / JPL-Caltech&lt;/a&gt;&lt;/b&gt;&lt;br&gt;&lt;p&gt;&lt;b&gt;Bands&lt;/b&gt;&lt;table class=\&quot;eecat\&quot;&gt;&lt;tr&gt;&lt;th scope=\&quot;col\&quot;&gt;Name&lt;/th&gt;&lt;th scope=\&quot;col\&quot;&gt;Description&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;elevation&lt;/td&gt;&lt;td&gt;&lt;p&gt;Elevation&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;Terms of Use&lt;/b&gt;&lt;br&gt;&lt;p&gt;Unless otherwise noted, images and video on JPL public\nweb sites (public sites ending with a jpl.nasa.gov address) may\nbe used for any purpose without prior permission. For more information\nand exceptions visit the &lt;a href=\&quot;https://www.jpl.nasa.gov/imagepolicy/\&quot;&gt;JPL Image Use Policy site&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Suggested citation(s)&lt;/b&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;Farr, T.G., Rosen, P.A., Caro, E., Crippen, R., Duren, R., Hensley,\nS., Kobrick, M., Paller, M., Rodriguez, E., Roth, L., Seal, D.,\nShaffer, S., Shimada, J., Umland, J., Werner, M., Oskin, M., Burbank,\nD., and Alsdorf, D.E., 2007, The shuttle radar topography mission:\nReviews of Geophysics, v. 45, no. 2, RG2004, at\n&lt;a href=\&quot;https://doi.org/10.1029/2005RG000183\&quot;&gt;https://doi.org/10.1029/2005RG000183&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;style&gt;\n  table.eecat {\n  border: 1px solid black;\n  border-collapse: collapse;\n  font-size: 13px;\n  }\n  table.eecat td, tr, th {\n  text-align: left; vertical-align: top;\n  border: 1px solid gray; padding: 3px;\n  }\n  td.nobreak { white-space: nowrap; }\n&lt;/style&gt;&quot;,
+      &quot;keywords&quot;: [
+         &quot;dem&quot;,
+         &quot;elevation&quot;,
+         &quot;geophysical&quot;,
+         &quot;nasa&quot;,
+         &quot;srtm&quot;,
+         &quot;topography&quot;,
+         &quot;usgs&quot;
+      ],
+      &quot;period&quot;: 0,
+      &quot;product_tags&quot;: [
+         &quot;srtm&quot;,
+         &quot;elevation&quot;,
+         &quot;topography&quot;,
+         &quot;dem&quot;,
+         &quot;geophysical&quot;
+      ],
+      &quot;provider&quot;: &quot;NASA / USGS / JPL-Caltech&quot;,
+      &quot;provider_url&quot;: &quot;https://cmr.earthdata.nasa.gov/search/concepts/C1000000240-LPDAAC_ECS.html&quot;,
+      &quot;sample&quot;: &quot;https://mw1.google.com/ges/dd/images/SRTM90_V4_sample.png&quot;,
+      &quot;source_tags&quot;: [
+         &quot;nasa&quot;,
+         &quot;usgs&quot;
+      ],
+      &quot;system:asset_size&quot;: 132792638252,
+      &quot;system:visualization_0_bands&quot;: &quot;elevation&quot;,
+      &quot;system:visualization_0_gamma&quot;: &quot;1.6&quot;,
+      &quot;system:visualization_0_max&quot;: &quot;6000.0&quot;,
+      &quot;system:visualization_0_min&quot;: &quot;0.0&quot;,
+      &quot;system:visualization_0_name&quot;: &quot;Elevation&quot;,
+      &quot;tags&quot;: [
+         &quot;dem&quot;,
+         &quot;elevation&quot;,
+         &quot;geophysical&quot;,
+         &quot;nasa&quot;,
+         &quot;srtm&quot;,
+         &quot;topography&quot;,
+         &quot;usgs&quot;
+      ],
+      &quot;thumb&quot;: &quot;https://mw1.google.com/ges/dd/images/SRTM90_V4_thumb.png&quot;,
+      &quot;title&quot;: &quot;NASA SRTM Digital Elevation 30m&quot;,
+      &quot;type_name&quot;: &quot;Image&quot;,
+      &quot;visualization_0_bands&quot;: &quot;elevation&quot;,
+      &quot;visualization_0_gamma&quot;: &quot;1.6&quot;,
+      &quot;visualization_0_max&quot;: &quot;6000.0&quot;,
+      &quot;visualization_0_min&quot;: &quot;0.0&quot;,
+      &quot;visualization_0_name&quot;: &quot;Elevation&quot;
+   },
+   &quot;type&quot;: &quot;Image&quot;,
+   &quot;version&quot;: 1641990767055141
+}
+</pre></div>
+</div>
+</div>
+</div>
+<p>If the above code yields output, you’ll know you’re ready for to go!</p>
+<div class="section" id="selecting-imagery">
+<h2>Selecting imagery<a class="headerlink" href="#selecting-imagery" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geetools</span> <span class="kn">import</span> <span class="n">batch</span>
+
+<span class="k">def</span> <span class="nf">download_NAIP_toLocal</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    downloads NAIP imagery from the specified bounding box and saves it as `name`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">AOI</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">collection</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s2">&quot;USDA/NAIP/DOQQ&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s2">&quot;2010-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-01-01&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">AOI</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="n">image</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">mosaic</span><span class="p">())</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">AOI</span><span class="p">)</span>
+    <span class="n">batch</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">toLocal</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">AOI</span><span class="p">)</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="p">[</span><span class="mf">35.998708946524324</span><span class="p">,</span> <span class="mf">36.003257110633896</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">78.94764325291365</span><span class="p">,</span> <span class="o">-</span><span class="mf">78.9412917819664</span><span class="p">]</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;naipsample&#39;</span>
+<span class="n">download_NAIP_toLocal</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unzip the files</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="n">path_to_zip_file</span> <span class="o">=</span> <span class="s1">&#39;naipsample.zip&#39;</span>
+<span class="n">directory_to_extract_to</span> <span class="o">=</span> <span class="s1">&#39;naipsample&#39;</span>
+<span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path_to_zip_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">directory_to_extract_to</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combine the files:</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="k">def</span> <span class="nf">stack_bands</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
+    <span class="n">file_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.R.tif&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.G.tif&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.B.tif&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Read metadata of first file</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">as</span> <span class="n">src0</span><span class="p">:</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">src0</span><span class="o">.</span><span class="n">meta</span>
+
+    <span class="c1"># Update meta to reflect the number of layers</span>
+    <span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">))</span>
+
+    <span class="c1"># Read each layer and write it to stack</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">meta</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+        <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="k">as</span> <span class="n">src1</span><span class="p">:</span>
+                <span class="n">dst</span><span class="o">.</span><span class="n">write_band</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">src1</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">outname</span> <span class="o">=</span> <span class="s2">&quot;stacked_sample.tif&quot;</span>
+<span class="n">stack_bands</span><span class="p">(</span><span class="s1">&#39;naipsample/download&#39;</span><span class="p">,</span><span class="n">outname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the example</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/earth_engine_7_1.png" src="_images/earth_engine_7_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geetools</span> <span class="kn">import</span> <span class="n">batch</span>
+
+<span class="k">def</span> <span class="nf">download_S2_toLocal</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    downloads Sentinel 2 imagery from the specified bounding box and saves it as `name`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">AOI</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">collection</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s2">&quot;COPERNICUS/S2_SR&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-30&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">ee</span><span class="o">.</span><span class="n">Filter</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="s1">&#39;CLOUDY_PIXEL_PERCENTAGE&#39;</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">AOI</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="n">image</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">mosaic</span><span class="p">())</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">AOI</span><span class="p">)</span>
+    <span class="n">batch</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">toLocal</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">AOI</span><span class="p">)</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="p">[</span><span class="mf">35.998708946524324</span><span class="p">,</span> <span class="mf">36.003257110633896</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">78.94764325291365</span><span class="p">,</span> <span class="o">-</span><span class="mf">78.9412917819664</span><span class="p">]</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;s2sample&#39;</span>
+<span class="n">download_S2_toLocal</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="n">path_to_zip_file</span> <span class="o">=</span> <span class="s1">&#39;s2sample.zip&#39;</span>
+<span class="n">directory_to_extract_to</span> <span class="o">=</span> <span class="s1">&#39;s2sample&#39;</span>
+<span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path_to_zip_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">directory_to_extract_to</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="k">def</span> <span class="nf">stack_bands_s2</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
+    <span class="n">file_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.B4.tif&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.B3.tif&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.B2.tif&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Read metadata of first file</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">as</span> <span class="n">src0</span><span class="p">:</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">src0</span><span class="o">.</span><span class="n">meta</span>
+
+    <span class="c1"># Update meta to reflect the number of layers</span>
+    <span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">))</span>
+
+    <span class="c1"># Read each layer and write it to stack</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">meta</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+        <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="k">as</span> <span class="n">src1</span><span class="p">:</span>
+                <span class="n">dst</span><span class="o">.</span><span class="n">write_band</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">src1</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">outname</span> <span class="o">=</span> <span class="s2">&quot;stacked_s2_sample.tif&quot;</span>
+<span class="n">stack_bands_s2</span><span class="p">(</span><span class="s1">&#39;s2sample/download&#39;</span><span class="p">,</span><span class="n">outname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the example</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+<span class="n">show</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span><span class="o">/</span><span class="mi">4096</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="c1"># show(data.read([1,2,3]).astype(&#39;float&#39;)/255, transform=data.transform, ax=ax)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/earth_engine_11_2.png" src="_images/earth_engine_11_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geetools</span> <span class="kn">import</span> <span class="n">batch</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="p">[</span><span class="mf">35.998708946524324</span><span class="p">,</span> <span class="mf">36.003257110633896</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">78.94764325291365</span><span class="p">,</span> <span class="o">-</span><span class="mf">78.9412917819664</span><span class="p">]</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lon</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;s2sample&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">AOI</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collection</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s2">&quot;COPERNICUS/S2_SR&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s2">&quot;2010-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-01-01&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filterBounds</span><span class="p">(</span><span class="n">AOI</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collection</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ee.imagecollection.ImageCollection at 0x16f497880&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">mosaic</span><span class="p">())</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">AOI</span><span class="p">)</span>
+<span class="c1"># batch.image.toLocal(image, name, scale=scale, region=AOI)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="plotting.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Basic plotting of geospatial data</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kyle Bradbury<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

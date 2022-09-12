@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to your Jupyter Book &#8212; My sample book</title>
+    <title>Setting up your environment &#8212; Python for geospatial imagery</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="Basic plotting of geospatial data" href="plotting.html" />
+    <link rel="prev" title="Introduction to Python for Geospatial Imagery Data and Machine Learning" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -70,10 +71,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/geopython_logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Python for geospatial imagery</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -82,21 +83,26 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
-   Welcome to your Jupyter Book
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   Introduction to Python for Geospatial Imagery Data and Machine Learning
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Setting up your environment
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+  <a class="reference internal" href="plotting.html">
+   Basic plotting of geospatial data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="earth_engine.html">
+   Earth Engine for gathering data
   </a>
  </li>
 </ul>
@@ -140,9 +146,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/setup.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -156,7 +162,7 @@
         aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
-            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+            href="https://github.com/kylebradbury/geopython"><button type="button" class="btn btn-secondary topbarbtn"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         
@@ -186,21 +192,24 @@
         
               <div>
                 
-  <div class="section" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Permalink to this headline">¶</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Here is a note!</p>
-</div>
-<p>And here is a code block:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$e = mc^2$
-</pre></div>
-</div>
-<p>Check out the content pages bundled with this sample book to see more.</p>
-<div class="toctree-wrapper compound">
-</div>
+  <div class="section" id="setting-up-your-environment">
+<h1>Setting up your environment<a class="headerlink" href="#setting-up-your-environment" title="Permalink to this headline">¶</a></h1>
+<p>There are a few steps recommended for beginning working with geospatial packages:</p>
+<ol class="simple">
+<li><p>Since there are many dependencies, begin by creating a virtual environment for your Python geospatial work.</p></li>
+<li><p>Install the required dependencies:</p>
+<ul class="simple">
+<li><p>numpy</p></li>
+<li><p>matplotlib</p></li>
+<li><p>pandas</p></li>
+<li><p>geopandas</p></li>
+<li><p>rasterio</p></li>
+<li><p><a class="reference external" href="https://developers.google.com/earth-engine/guides/python_install">Google Earth Engine (earthengine-api)</a>. Be sure that you can successfully run <code class="docutils literal notranslate"><span class="pre">ee.Initialize</span></code> before proceeding</p></li>
+</ul>
+</li>
+<li><p>Activate your Python environment before beginning your analyses</p></li>
+</ol>
+<p>I personally recommend the use of an integrated development environment (IDE) and <a class="reference external" href="https://code.visualstudio.com/">VS Code</a> is my recommended IDE.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -232,11 +241,20 @@ structured.</p>
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="index.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Introduction to Python for Geospatial Imagery Data and Machine Learning</p>
+            </div>
+        </a>
+    </div>
      <div id="next">
-        <a class="right-next" href="markdown.html" title="next page">
+        <a class="right-next" href="plotting.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Markdown Files</p>
+                <p class="prevnext-title">Basic plotting of geospatial data</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
@@ -250,7 +268,7 @@ structured.</p>
     <div class="container">
       <p>
         
-          By J. Booker<br/>
+          By Kyle Bradbury<br/>
         
             &copy; Copyright 2021.<br/>
       </p>

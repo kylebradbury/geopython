@@ -2,7 +2,18 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: index
 chapters:
-- file: markdown
-- file: notebooks
+- file: setup
+- file: plotting
+- file: earth_engine
+# parts:
+#   - caption: Name of Numbered Part 1
+#     numbered: True  # Only applies to chapters in Part 1.
+#     chapters:
+#     - file: setup
+#     - file: plotting
+#   - caption: Name of Not-numbered Part 2
+#     chapters:
+#     - file: next
+#     - file: demo
